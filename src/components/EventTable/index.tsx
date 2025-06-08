@@ -17,15 +17,39 @@ type EventTableProps = {
 
 export const EventTable: FC<EventTableProps> = ({ events }) => {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [eventsList, setEventsList] = useState(events);
+
+  const handleNewEvent = () => {
+    console.log("aqui");
+    const newEvent = {
+      name: "Clube do Laço Coração Pantaneiro",
+      teams: 3,
+      status: "Pedente",
+      date: "09 a 11 de Junho",
+    };
+    setEventsList([...eventsList, newEvent]);
+  };
+
+  const pages = Array.from(
+    { length: Math.ceil(eventsList.length / 2) },
+    (_, i) => i + 1
+  );
 
   return (
     <Styles.TableContainer>
       <Styles.SearchRow>
         <Styles.SearchInputContainer>
           <img src={Search} alt="Search" />
-          <Styles.SearchInput placeholder={"Buscar eventos"} />
+          <Styles.SearchInput
+            placeholder={"Buscar eventos"}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </Styles.SearchInputContainer>
-        <Styles.InsertButton>+ Inserir novo</Styles.InsertButton>
+        <Styles.InsertButton onClick={() => handleNewEvent()}>
+          + Inserir novo
+        </Styles.InsertButton>
       </Styles.SearchRow>
 
       <Styles.TableHeader>
@@ -35,7 +59,7 @@ export const EventTable: FC<EventTableProps> = ({ events }) => {
         <span>Data</span>
       </Styles.TableHeader>
 
-      {events.slice((page - 1) * 2, page * 2).map((event, idx) => (
+      {eventsList.slice((page - 1) * 2, page * 2).map((event, idx) => (
         <Styles.TableRow key={idx}>
           <a href="#">{event.name}</a>
           <span>{event.teams}</span>
@@ -52,23 +76,23 @@ export const EventTable: FC<EventTableProps> = ({ events }) => {
 
       <Styles.Pagination>
         <Styles.PaginationButton
-          disabled={page === 1}
+          active={page === 1}
           onClick={() => setPage(page - 1)}
         >
           Anterior
         </Styles.PaginationButton>
-        {[1, 2, 3].map((n) => (
+        {pages.map((n) => (
           <Styles.PaginationButton
             key={n}
             onClick={() => setPage(n)}
-            disabled={page !== n}
+            active={page !== n}
             option
           >
             {n}
           </Styles.PaginationButton>
         ))}
         <Styles.PaginationButton
-          disabled={page === 3}
+          active={page === pages.length}
           onClick={() => setPage(page + 1)}
         >
           Próxima

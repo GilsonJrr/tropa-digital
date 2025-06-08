@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type Props = {
-  disabled?: boolean
+  active?: boolean
   option?: boolean
 }
 
@@ -119,10 +119,10 @@ export const PaginationButton = styled.button<Props>`
   border: none;
   background: white;
   cursor: pointer;
-  background: ${({disabled}) => disabled ? '#F5F5F5' : '#CC6237'};
+  background: ${({active}) => active ? '#F5F5F5' : '#CC6237'};
   font-size: 12px;
   font-weight: bold;
-  color: ${({disabled}) => disabled ? '#000000' : '#FFFFFF'};
+  color: ${({active}) => active ? '#000000' : '#FFFFFF'};
   display: flex;
   justify-content: center;
   align-items: center;

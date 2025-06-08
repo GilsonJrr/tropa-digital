@@ -3,7 +3,7 @@ import * as Styles from "./styles";
 import Sidebar from "../../components/Sidebar";
 import EventTable from "../../components/EventTable";
 
-const events = Array(10).fill({
+const events = Array(5).fill({
   name: "Clube do Laço Coração Pantaneiro",
   teams: 10,
   status: "Ativo",
